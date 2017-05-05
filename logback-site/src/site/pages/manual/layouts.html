@@ -954,6 +954,52 @@ Caller+0   at mainPackage.sub.sample.Bar.createLoggingRequest(Bar.java:17)</pre>
       </tr>
 
       <tr>
+            <td class="word" name="hashedException">
+                <b>hEx</b>{<em>depth</em>} <br />
+                <b>hashedException</b>{<em>depth</em>} <br />
+                <br />
+                <b>hEx</b>{depth, evaluator-1, ..., evaluator-n} <br />
+                <b>hashedException</b>{depth, evaluator-1, ..., evaluator-n} <br />
+            </td>
+
+            <td>
+                <p>Same as the %throwable conversion word above with the
+                    addition of a hash on each error stack.</p>
+
+                <p>A hash (hexadecimal integer) is computed and inlined in front of each individual error stack trace.</p>
+
+                <p>Here is an example:</p>
+
+                <p class="source small"><span class="red">#07e70d1e</span>&gt; com.xyz.MyApp$MyClient$MyClientException: An error occurred while getting the things
+  at com.xyz.MyApp$MyClient.getTheThings(MyApp.java:26)
+  at com.xyz.MyApp.test_logging(MyApp.java:16)
+  at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+  at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+  at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+  at java.lang.reflect.Method.invoke(Method.java:498)
+  at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+  at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+  ...
+Caused by: <span class="red">#393b506a</span>&gt; com.xyz.MyApp$HttpStack$HttpError: I/O error on GET request for http://dummy/things
+  at com.xyz.MyApp$HttpStack.get(MyApp.java:40)
+  at com.xyz.MyApp$MyClient.getTheThings(MyApp.java:24)
+  ... 23 common frames omitted
+Caused by: <span class="red">#d6db326f</span>&gt; java.net.SocketTimeoutException: Read timed out
+  at com.xyz.MyApp$HttpStack.get(MyApp.java:38)
+  ... 24 common frames omitted
+</p>
+
+                <p>Comparing two stack traces can be somewhat painful if you want to check whether two errors are - or not -
+                    occurrences of the same error</p>
+
+                <p>Those hash will help you detect several occurrences of the same error, as it is highly
+                    probable that two errors with the same hash will be - indeed - occurrences of the same error
+                </p>
+            </td>
+
+      </tr>
+
+      <tr>
         <td class="word" name="nopex">
           <b>nopex</b> <br />
           <b>nopexception</b>
@@ -972,6 +1018,20 @@ Caller+0   at mainPackage.sub.sample.Bar.createLoggingRequest(Bar.java:17)</pre>
           </p>
         </td>
       </tr>
+
+    <tr>
+        <td class="word" name="stackHash">
+            <b>stackHash</b>{default} <br/>
+            <b>sH</b>{default}
+        </td>
+
+        <td>
+            <p>Computes and outputs the stack hash of the exception associated with the logging event, if any.</p>
+
+            <p>In case the logging event has no associated exception, <em>default</em> is output, or empty string if not specified.
+            </p>
+        </td>
+    </tr>
 
       <tr >
         <td class="word" name="marker">

@@ -80,11 +80,17 @@ public class PatternLayout extends PatternLayoutBase<ILoggingEvent> {
         defaultConverterMap.put("X", MDCConverter.class.getName());
         defaultConverterMap.put("mdc", MDCConverter.class.getName());
 
+        defaultConverterMap.put("sH", StackHashConverter.class.getName());
+        defaultConverterMap.put("stackHash", StackHashConverter.class.getName());
+
         defaultConverterMap.put("ex", ThrowableProxyConverter.class.getName());
         defaultConverterMap.put("exception", ThrowableProxyConverter.class.getName());
         defaultConverterMap.put("rEx", RootCauseFirstThrowableProxyConverter.class.getName());
         defaultConverterMap.put("rootException", RootCauseFirstThrowableProxyConverter.class.getName());
         defaultConverterMap.put("throwable", ThrowableProxyConverter.class.getName());
+
+        defaultConverterMap.put("hEx", ThrowableConverterWithHash.class.getName());
+        defaultConverterMap.put("hashedException", ThrowableConverterWithHash.class.getName());
 
         defaultConverterMap.put("xEx", ExtendedThrowableProxyConverter.class.getName());
         defaultConverterMap.put("xException", ExtendedThrowableProxyConverter.class.getName());
